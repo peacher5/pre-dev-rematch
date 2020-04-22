@@ -1,26 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect} from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-function App() {
+const App = () => {
+  const { fname, lname } = useSelector(({ app }) => app)
+  const { app } = useDispatch()
+
+  useEffect(() => {
+    app.fetchFname()
+  }, [app])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      ชื่อ: {fname}
+      <br />
+      นามสกุล: {lname}
+      <hr />
+      ชื่อ: <input onChange={e => app.setFname(e.target.value)} />
+      <br />
+      นามสกุล: <input onChange={e => app.setLname(e.target.value)} />
+      <hr />
+      <button onClick={() => app.fetchFname()}>Fetch</button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
